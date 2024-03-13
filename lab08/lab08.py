@@ -71,20 +71,30 @@ def cumulative_mul(t):
     Tree(105, [Tree(15, [Tree(5)]), Tree(7)])
     """
     "*** YOUR CODE HERE ***"
-    # ##这个问题用递归的方式来写
-    # if t.is_leaf():
-    #     return t.label
-    # ##叶子结点直接返回
-    # multipy_res = t.label
+    ##deal函数返回一棵树的子树节点乘积
+    def deal(t):
+        res = t.label
+        if t.is_leaf():
+            return t.label
+        for b in t.branches:
+            res = res * deal(b)
+        return res
+    
+    if t.is_leaf():
+        return 
     # for b in t.branches:
-    #     multipy_res = multipy_res * cumulative_mul(b)
-    # return multipy_res
-    ##上面那个是计算根节点的乘积
-    new_label = t.label
+    #     new_label = deal(b)
+    #     b.label = new_label
+    #     cumulative_mul(b)
     for b in t.branches:
-        cumulative_mul(b)
-        new_label = new_label * b.label
-    t.label = new_label
+        new_label = deal(b)
+        b.label = new_label
+        new_label_t = t.label * new_label
+        t.label = new_label_t
+    
+
+
+    
 
     
 
@@ -132,7 +142,19 @@ def reverse_other(t):
     Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
     """
     "*** YOUR CODE HERE ***"
-
+    def deal(t,index):
+        if index % 2 == 0:
+            j = 0
+            label_list = []
+            for b in t.branches:
+                label_list.append(b.label)
+            for b in t.branches:
+                b.label = label_list[len(label_list) - j - 1]
+                j = j + 1
+        for b in t.branches:
+            deal(b,index + 1)
+    deal(t,0)
+    # return t
 
 class Link:
     """A linked list.
