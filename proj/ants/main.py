@@ -1,22 +1,18 @@
+import ants, importlib
+importlib.reload(ants)
 from ants import *
 
 if __name__ == "__main__":
-    beehive, layout = Hive(AssaultPlan()), dry_layout
-    dimensions = (1, 9)
-    gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
-    place = gamestate.places['tunnel_0_4']
-    # fire = FireAnt(armor=1)
-    # place.add_insect(fire)
-    # place.add_insect(Bee(3))
-    # place.add_insect(Bee(5))
-    # print("It is running now")
-    # place.bees[0].action(gamestate)
-
-    place = gamestate.places["tunnel_0_0"]
-    bee = Bee(3)
-    ant = FireAnt()
-    place.add_insect(bee)
-    place.add_insect(ant)
-    bee.action(gamestate)
-    bee.action(gamestate)
-    bee.action(gamestate)
+    beehive = ants.Hive(ants.AssaultPlan())
+    dimensions = (2, 9)
+    gamestate = ants.GameState(None, beehive, ants.ant_types(),ants.dry_layout, dimensions)
+    ants.bees_win = lambda: None
+    # QueenAnt Placement
+    queen = ants.QueenAnt()
+    gamestate.places['tunnel_0_2'].add_insect(queen)
+    queen.action(gamestate)
+# Attack a bee
+    bee = ants.Bee(3)
+    gamestate.places['tunnel_0_4'].add_insect(bee)
+    queen.action(gamestate)
+    print(bee.armor) # Queen should still hit the bee
