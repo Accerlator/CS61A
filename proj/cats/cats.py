@@ -17,6 +17,13 @@ def choose(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    index = 0
+    for para in paragraphs:
+        if select(para) == True:
+            if index == k:
+                return para
+            index = index + 1
+    return ''
     # END PROBLEM 1
 
 
@@ -33,7 +40,15 @@ def about(topic):
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    def deal(para):
+        para = split(lower(remove_punctuation(para)))
+        for i in para:
+            if i in topic:
+                return True
+        return False
+    return deal
     # END PROBLEM 2
+
 
 
 def accuracy(typed, reference):
